@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pc/bloc/qrattendance/qrbloc_bloc.dart';
-import 'package:pc/bloc/qrattendance/qrbloc_event.dart';
-import 'package:pc/bloc/qrattendance/qrbloc_state.dart';
 import 'package:pc/bloc/stuattendace/stuattendance_bloc.dart';
 import 'package:pc/bloc/stuattendace/stuattendance_event.dart';
 import 'package:pc/bloc/stuattendace/stuattendance_state.dart';
@@ -94,48 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 16),
 
-            // ✅ Scan QR Button
-            ElevatedButton.icon(
-              onPressed: () async {
-                final XFile? image = await _picker.pickImage(
-                  source: ImageSource.camera,
-                );
-
-                if (image != null) {
-                  // ✅ Send image to QR API
-                  context.read<QrBloc>().add(UploadQrImageEvent(image: image));
-                } else {
-                  // 🟡 No image picked
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("QR scan cancelled"),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
-                }
-              },
-              icon: const Icon(Icons.qr_code_scanner, color: Colors.white),
-              label: const Text(
-                'Scan QR',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 24,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: const BorderSide(color: Colors.redAccent, width: 2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
             // ✅ Show Attendance by Date Button
             ElevatedButton.icon(
               onPressed: () {
@@ -198,26 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             // ✅ BlocListener for QR Upload API
-            BlocListener<QrBloc, QrState>(
-              listener: (context, state) {
-                if (state is QrSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                } else if (state is QrFailure) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.error),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              },
-              child: const SizedBox(),
-            ),
           ],
         ),
       ),
