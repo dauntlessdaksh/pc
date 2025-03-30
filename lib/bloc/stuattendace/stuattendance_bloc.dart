@@ -9,6 +9,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   AttendanceBloc({required this.repository}) : super(AttendanceInitial()) {
     on<MarkAttendanceEvent>(_onMarkAttendance);
   }
+  //hello my friend
 
   Future<void> _onMarkAttendance(
     MarkAttendanceEvent event,
