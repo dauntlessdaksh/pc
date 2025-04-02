@@ -45,9 +45,15 @@ class _QrScannerState extends State<QrScanner> {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'encrypted_key': scannedData}),
     );
-
-    _showDialog(scannedData);
-    _showDialog(response.body);
+ final responseBody = jsonDecode(response.body);
+    
+    if (response.statusCode == 200) {
+      // Handle success
+      _showDialog('Success: ${responseBody['message']}');
+    } else {
+      // Handle error
+      _showDialog('Error: ${responseBody['message']}');
+    }
   }
 
   void _showDialog(String response) {
