@@ -5,6 +5,7 @@ import 'package:pc/bloc/stuattendace/stuattendance_bloc.dart';
 import 'package:pc/repository/stuattendance_repository.dart';
 import 'package:pc/repository/attendance_by_date_repository.dart';
 import 'package:pc/screens/home_screen.dart';
+import 'package:pc/screens/qr_scanner.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: QrScanner(),
       ),
     );
   }
